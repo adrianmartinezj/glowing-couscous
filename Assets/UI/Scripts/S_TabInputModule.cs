@@ -169,8 +169,8 @@ namespace UnityEngine.EventSystems
 
             if (eventSystem.sendNavigationEvents)
             {
-                if (!usedEvent)
-                    usedEvent |= SendMoveEventToSelectedObject();
+                //if (!usedEvent)
+                //    usedEvent |= SendMoveEventToSelectedObject();
 
                 if (!usedEvent)
                     SendSubmitEventToSelectedObject();

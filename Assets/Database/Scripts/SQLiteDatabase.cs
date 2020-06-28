@@ -5,14 +5,16 @@ using System.IO;
 
 public class SQLiteDatabase : MonoBehaviour
 {
-	// Start is called before the first frame update
+	// Public
 	public static SQLiteDatabase Instance = null;
+    public IDbConnection DBConnection { get; private set; }
 
-	private void Awake()
+    private void Awake()
 	{
 		if (!Instance)
 		{
 			Instance = this;
+            DatabaseSystem.Database = Instance;
 		}
 		else if (Instance != this)
 		{
@@ -20,43 +22,19 @@ public class SQLiteDatabase : MonoBehaviour
 		}
 		DontDestroyOnLoad(this);
 	}
+	private void OnApplicationQuit()
+	{
+		DBConnection.Close();
+	}
 	void Start()
     {
 		// Create database
 		string connection = "URI=file:" + Application.persistentDataPath + "/" + "My_Database";
 
 		// Open connection
-		IDbConnection dbcon = new SqliteConnection(connection);
-		dbcon.Open();
-
-		// Create table
-		IDbCommand dbcmd;
-		dbcmd = dbcon.CreateCommand();
-		string q_createTable = "CREATE TABLE IF NOT EXISTS my_table (id INTEGER PRIMARY KEY, val INTEGER )";
-
-		dbcmd.CommandText = q_createTable;
-		dbcmd.ExecuteReader();
-
-		// Insert values in table
-		IDbCommand cmnd = dbcon.CreateCommand();
-		cmnd.CommandText = "INSERT INTO my_table (id, val) VALUES (0, 5)";
-		cmnd.ExecuteNonQuery();
-
-		// Read and print all values in table
-		IDbCommand cmnd_read = dbcon.CreateCommand();
-		IDataReader reader;
-		string query = "SELECT * FROM my_table";
-		cmnd_read.CommandText = query;
-		reader = cmnd_read.ExecuteReader();
-
-		while (reader.Read())
-		{
-			Debug.Log("id: " + reader[0].ToString());
-			Debug.Log("val: " + reader[1].ToString());
-		}
-
-		// Close connection
-		dbcon.Close();
+		DBConnection = new SqliteConnection(connection);
+		DBConnection.Open();
+		
 	}
 
     // Update is called once per frame

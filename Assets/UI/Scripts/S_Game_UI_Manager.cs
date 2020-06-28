@@ -35,11 +35,18 @@ public class S_Game_UI_Manager : MonoBehaviour
     {
         MainMenu = Instantiate(MainMenuObjectType);
         S_MainMenu.OnContinue += ContinueHandler;
+        S_MainMenu.OnMenuDestroy += OnMainMenuDestroy;
+    }
+
+    private void OnMainMenuDestroy()
+    {
+        // Cleanup because memory leaks
+        S_MainMenu.OnContinue -= ContinueHandler;
     }
 
     private void ContinueHandler()
     {
-
+        DatabaseSystem.testFunc();
         StartCoroutine(FadeOutCoroutine(MainMenu.GetComponent<S_MainMenu>().ChildCanvasGroup, MainMenu, () => 
         { 
             // Create a lambda for instantiating our equipment menu at the end

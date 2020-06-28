@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -8,6 +9,7 @@ public class S_MainMenu : MonoBehaviour
     // Public
     public delegate void ContinueAction();
     public static event ContinueAction OnContinue;
+    public static event Action OnMenuDestroy;
     public CanvasGroup ChildCanvasGroup;
     // Private
     private GameObject ChildPanel;
@@ -38,6 +40,9 @@ public class S_MainMenu : MonoBehaviour
         Debug.Log("Quit!");
         Application.Quit();
     }
+    private void OnDestroy()
+    {
+        OnMenuDestroy();
+    }
 
-    
 }
