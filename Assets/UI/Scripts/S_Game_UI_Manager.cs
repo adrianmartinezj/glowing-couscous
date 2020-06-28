@@ -16,7 +16,20 @@ public class S_Game_UI_Manager : MonoBehaviour
     private GameObject EquipmentMenu;
     private const float FADE_TIME = 0.4f;
     private delegate void Callback();
+    public static S_Game_UI_Manager Instance = null;
 
+    private void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(this);
+    }
     // Start is called before the first frame update
     void Start()
     {
