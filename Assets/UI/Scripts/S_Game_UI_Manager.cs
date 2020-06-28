@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class S_Game_UI_Manager : MonoBehaviour
 {
@@ -26,9 +27,13 @@ public class S_Game_UI_Manager : MonoBehaviour
     private void ContinueHandler()
     {
 
-        StartCoroutine(FadeOut(MainMenu.GetComponent<S_MainMenu>().ChildCanvasGroup, MainMenu, () => 
+        StartCoroutine(FadeOutCoroutine(MainMenu.GetComponent<S_MainMenu>().ChildCanvasGroup, MainMenu, () => 
         { 
+            // Create a lambda for instantiating our equipment menu at the end
             EquipmentMenu = Instantiate(EquipmentMenuObjectType);
+            GameObject EquipmentChildPanel = EquipmentMenu.transform.GetChild(0).gameObject;
+            Assert.IsNotNull(EquipmentChildPanel);
+            StartCoroutine(FadeInCoroutine(EquipmentChildPanel.GetComponent<CanvasGroup>()));
         }));
     }
 
@@ -39,7 +44,7 @@ public class S_Game_UI_Manager : MonoBehaviour
     }
 
 
-    private IEnumerator FadeOut(CanvasGroup canvasGroup, GameObject parent, Callback cb=null)
+    private IEnumerator FadeOutCoroutine(CanvasGroup canvasGroup, GameObject parent, Callback cb=null)
     {
         float deltaSeconds = 0.0f;
         while (deltaSeconds < FADE_TIME)
@@ -49,6 +54,22 @@ public class S_Game_UI_Manager : MonoBehaviour
             if (canvasGroup.alpha == 0)
             {
                 Destroy(parent);
+                // If there's a callback present, use it
+                cb?.Invoke();
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeInCoroutine(CanvasGroup canvasGroup, Callback cb = null)
+    {
+        float deltaSeconds = 0.0f;
+        while (deltaSeconds < FADE_TIME)
+        {
+            deltaSeconds += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(0, 1, deltaSeconds / FADE_TIME);
+            if (canvasGroup.alpha == 1)
+            {
                 // If there's a callback present, use it
                 cb?.Invoke();
             }
