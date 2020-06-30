@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 public class S_Game_UI_Manager : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class S_Game_UI_Manager : MonoBehaviour
     private GameObject MainMenuObjectType;
     [SerializeField]
     private GameObject EquipmentMenuObjectType;
+    [SerializeField]
+    private GameObject PauseMenuObjectType;
     private GameObject MainMenu;
     private GameObject EquipmentMenu;
+    private GameObject PauseMenu;
     private const float FADE_TIME = 0.4f;
     private delegate void Callback();
     public static S_Game_UI_Manager Instance = null;
@@ -36,6 +40,21 @@ public class S_Game_UI_Manager : MonoBehaviour
         MainMenu = Instantiate(MainMenuObjectType);
         S_MainMenu.OnContinue += ContinueHandler;
         S_MainMenu.OnMenuDestroy += OnMainMenuDestroy;
+        S_PauseMenu.OnMainMenu += BackToMainMenu;
+        S_PauseMenu.OnResume += Resume;
+    }
+
+    private void Resume()
+    {
+        Time.timeScale = 1f;
+
+        Destroy(PauseMenu);
+        // Quick fix to ensure the tab remains selected
+        if (EquipmentMenu)
+        {
+            S_EquipmentMenu_Inventory EquipmentMenu_Inventory = EquipmentMenu.GetComponentInChildren<S_EquipmentMenu_Inventory>();
+            EquipmentMenu_Inventory.SelectTab(EquipmentMenu_Inventory.CurrentTab);
+        }
     }
 
     private void OnMainMenuDestroy()
@@ -60,9 +79,24 @@ public class S_Game_UI_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape)
+            && MainMenu == null
+            && PauseMenu == null)
+        {
+            Pause();
+        }
     }
 
+    private void Pause()
+    {
+        Time.timeScale = 0f;
+        PauseMenu = Instantiate(PauseMenuObjectType);
+    }
+
+    private void BackToMainMenu()
+    {
+        throw new NotImplementedException();
+    }
 
     private IEnumerator FadeOutCoroutine(CanvasGroup canvasGroup, GameObject parent, Callback cb=null)
     {

@@ -12,8 +12,8 @@ public class S_EquipmentMenu_Inventory : MonoBehaviour
     // Private
     [SerializeField]
     private GameObject OverviewButton;
-    private enum Tab { Overview, Weapons, Armor, Modifiers};
-    private Tab currentTab = Tab.Overview;
+    public enum Tab { Overview, Weapons, Armor, Modifiers};
+    public Tab CurrentTab { get; private set; } = Tab.Overview;
     void Start()
     {
         if (!OverviewButton)
@@ -28,26 +28,50 @@ public class S_EquipmentMenu_Inventory : MonoBehaviour
     public void TabClick()
     {
         Debug.Log("currentObject: " + EventSystem.current.currentSelectedGameObject);
-        GameObject currentTabObject = EventSystem.current.currentSelectedGameObject;
-        switch(currentTabObject.name)
+        GameObject CurrentTabObject = EventSystem.current.currentSelectedGameObject;
+        switch(CurrentTabObject.name)
         {
             case "OverviewButton":
-                currentTab = Tab.Overview;
+                CurrentTab = Tab.Overview;
                 break;
             case "WeaponsButton":
-                currentTab = Tab.Weapons;
+                CurrentTab = Tab.Weapons;
                 break;
             case "ArmorButton":
-                currentTab = Tab.Armor;
+                CurrentTab = Tab.Armor;
                 break;
             case "ModifiersButton":
-                currentTab = Tab.Modifiers;
+                CurrentTab = Tab.Modifiers;
                 break;
             default:
                 Debug.Log("Something went wrong: Tab does not exist");
                 break;
         }
-        Debug.Log("currentTab: " + currentTab);
+        Debug.Log("CurrentTab: " + CurrentTab);
+    }
+
+    public void SelectTab(Tab tab)
+    {
+        string buttonName = "";
+        switch (tab)
+        {
+            case Tab.Overview:
+                buttonName = "OverviewButton";
+                break;
+            case Tab.Weapons:
+                buttonName = "WeaponsButton";
+                break;
+            case Tab.Armor:
+                buttonName = "ArmorButton";
+                break;
+            case Tab.Modifiers:
+                buttonName = "ModifiersButton";
+                break;
+            default:
+                Debug.Log("Something went wrong: Tab does not exist");
+                break;
+        }
+        GameObject.Find(buttonName).GetComponent<Button>().Select();
     }
 
     // Update is called once per frame

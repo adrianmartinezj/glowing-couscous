@@ -73,6 +73,8 @@ namespace UnityEngine.EventSystems
             set { m_ForceModuleActive = value; }
         }
 
+        public bool IsMouseInputActive = true;
+
         public float inputActionsPerSecond
         {
             get { return m_InputActionsPerSecond; }
@@ -176,7 +178,8 @@ namespace UnityEngine.EventSystems
                     SendSubmitEventToSelectedObject();
             }
 
-            ProcessMouseEvent();
+            if (IsMouseInputActive)
+                ProcessMouseEvent();
         }
 
         /// <summary>

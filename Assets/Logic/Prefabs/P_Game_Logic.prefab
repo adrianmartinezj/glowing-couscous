@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3669103299598479078
+--- !u!1 &863178791546113132
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6192198679743574601}
-  - component: {fileID: 6084847455258467379}
+  - component: {fileID: 5371120766789552227}
+  - component: {fileID: -7920952665698685032}
   m_Layer: 0
-  m_Name: P_Game_UI_Manager
+  m_Name: P_Game_Logic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6192198679743574601
+--- !u!4 &5371120766789552227
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669103299598479078}
+  m_GameObject: {fileID: 863178791546113132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,21 +31,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6084847455258467379
+--- !u!114 &-7920952665698685032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669103299598479078}
+  m_GameObject: {fileID: 863178791546113132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f33c8498950f04287e4a380f846bb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 30ec764ee37b2e746ae69b1d9edbf1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenuObjectType: {fileID: 8714835773161739269, guid: cb549b407dc4bb8448e69711cc064859,
-    type: 3}
-  EquipmentMenuObjectType: {fileID: 5759816127228768161, guid: 7d0c8e6b8cf0b8e4f84a14b7cfdf8ff9,
-    type: 3}
-  PauseMenuObjectType: {fileID: 9154363178128420252, guid: 4eb48e914e747df4c91d3cb153fd507a,
-    type: 3}
+  Player: {fileID: 1100197677219218721, guid: fbb70bc9103f1254db975fbf621d48f3, type: 3}
