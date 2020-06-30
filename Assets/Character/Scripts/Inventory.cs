@@ -5,19 +5,20 @@ using UnityEngine;
 public class Inventory
 {
     // Public
-    public List<GameObject> Items { get; private set; }
+    public List<Entity> Items { get; private set; }
 
     public Inventory()
     {
         Debug.Log("Constructing inventory");
+        Items = new List<Entity>();
     }
 
-    public void AddItem (GameObject obj)
+    public void AddItem (Entity obj)
     {
         Items.Add(obj);
     }
 
-    public bool RemoveItem (GameObject obj)
+    public bool RemoveItem (Entity obj)
     {
         if (Items.Contains(obj))
         {

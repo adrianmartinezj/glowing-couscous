@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S_GameLogic : MonoBehaviour
+public class S_Game_Logic : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject Player;
+    public GameObject Player { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = Instantiate(Player);
+        Player = Instantiate(new GameObject("PlayerCharacter"));
+        Player.AddComponent<ControllableCharacter>();
     }
 
     // Update is called once per frame

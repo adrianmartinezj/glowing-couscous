@@ -5,4 +5,5 @@ using UnityEngine;
 public class BaseCharacter : MonoBehaviour
 {
     protected readonly Inventory m_Inventory = new Inventory();
+    public Inventory inventory { get; }
 }

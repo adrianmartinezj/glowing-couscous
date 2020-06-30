@@ -30,7 +30,7 @@ public class SQLiteDatabase : MonoBehaviour
     {
 		// Create database
 		string connection = "URI=file:" + Application.persistentDataPath + "/" + "My_Database";
-
+		Debug.Log(Application.persistentDataPath);
 		// Open connection
 		DBConnection = new SqliteConnection(connection);
 		DBConnection.Open();

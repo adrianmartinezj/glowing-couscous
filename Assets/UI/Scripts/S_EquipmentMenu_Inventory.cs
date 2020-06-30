@@ -23,6 +23,20 @@ public class S_EquipmentMenu_Inventory : MonoBehaviour
             Assert.IsNotNull(OverviewButton);
         }
         OverviewButton.GetComponent<Button>().Select();
+
+        // Get Player inventory
+        GameObject logic = GameObject.FindGameObjectWithTag("Logic");
+        if (logic)
+            Debug.Log("Logic found!");
+        GameObject player = logic.GetComponent<S_Game_Logic>().Player;
+        if (player)
+            Debug.Log("player found!");
+        Assert.IsNotNull(player);
+        GameObject content = GameObject.Find("Content");
+        ControllableCharacter character = player.GetComponent<ControllableCharacter>();
+        Debug.Log("Character : " + character);
+        GameObject entry = Instantiate(new GameObject("Test"), content.transform);
+        entry.AddComponent<Entry>();
     }
 
     public void TabClick()
