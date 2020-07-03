@@ -9,7 +9,6 @@ public class Inventory
 
     public Inventory()
     {
-        Debug.Log("Constructing inventory");
         Items = new List<Entity>();
     }
 

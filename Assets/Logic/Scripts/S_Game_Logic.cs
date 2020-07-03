@@ -10,6 +10,8 @@ public class S_Game_Logic : MonoBehaviour
     {
         Player = Instantiate(new GameObject("PlayerCharacter"));
         Player.AddComponent<ControllableCharacter>();
+        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(Player);
     }
 
     // Update is called once per frame

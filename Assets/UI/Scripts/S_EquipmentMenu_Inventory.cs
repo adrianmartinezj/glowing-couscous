@@ -12,6 +12,8 @@ public class S_EquipmentMenu_Inventory : MonoBehaviour
     // Private
     [SerializeField]
     private GameObject OverviewButton;
+    [SerializeField]
+    private GameObject Entry;
     public enum Tab { Overview, Weapons, Armor, Modifiers};
     public Tab CurrentTab { get; private set; } = Tab.Overview;
     void Start()
@@ -24,19 +26,33 @@ public class S_EquipmentMenu_Inventory : MonoBehaviour
         }
         OverviewButton.GetComponent<Button>().Select();
 
+        LoadPlayerInventory();
+    }
+
+    private void LoadPlayerInventory()
+    {
         // Get Player inventory
         GameObject logic = GameObject.FindGameObjectWithTag("Logic");
-        if (logic)
-            Debug.Log("Logic found!");
         GameObject player = logic.GetComponent<S_Game_Logic>().Player;
-        if (player)
-            Debug.Log("player found!");
         Assert.IsNotNull(player);
         GameObject content = GameObject.Find("Content");
         ControllableCharacter character = player.GetComponent<ControllableCharacter>();
-        Debug.Log("Character : " + character);
-        GameObject entry = Instantiate(new GameObject("Test"), content.transform);
-        entry.AddComponent<Entry>();
+        for (int i = 0; i < character.inventory.Items.Count; i++)
+        {
+            var wep = character.inventory.Items[i];
+            if (wep.GetType() == typeof(Weapon))
+            {
+                GameObject entry = Instantiate(Entry, content.transform);
+                // Get text of entry
+                RectTransform rect = entry.transform.GetComponent<RectTransform>();
+                float origHeight = rect.sizeDelta.y;
+                float offset = -(rect.sizeDelta.y * i);
+                rect.offsetMax = new Vector2(0, offset);
+                rect.sizeDelta = new Vector2(0, origHeight);
+
+                entry.transform.GetChild(0).GetComponent<Text>().text = ((Weapon)wep).name;
+            }
+        }
     }
 
     public void TabClick()
