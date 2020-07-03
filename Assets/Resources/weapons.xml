@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WeaponCollection>
+  <Weapons>
+    <Weapon name="Gladiator Sword">
+      <Damage>6</Damage>
+      <Speed>2.0</Speed>
+    </Weapon>
+    <Weapon name="Gladiator Dagger">
+      <Damage>3</Damage>
+      <Speed>1.4</Speed>
+    </Weapon>
+    <Weapon name="Gladiator Axe">
+      <Damage>10</Damage>
+      <Speed>3.0</Speed>
+    </Weapon>
+  </Weapons>
+</WeaponCollection>

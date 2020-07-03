@@ -10,28 +10,11 @@ public class ControllableCharacter : BaseCharacter
     // Start is called before the first frame update
     void Start()
     {
-        IDataReader reader = (IDataReader)Command(SQLiteCommand.Select, "* FROM Weapons").Packet;
-        while (reader.Read())
+        const string path = "items";
+        EntityDatabase ed = EntityDatabase.Load(path);
+        foreach (Weapon wep in ed.weapons)
         {
-            int id = Convert.ToInt32(reader[0].ToString());
-            int damage = Convert.ToInt32(reader[1].ToString());
-            float speed = float.Parse(reader[2].ToString());
-            string name = reader[3].ToString();
-            m_Inventory.AddItem(new Weapon(id, damage, speed, name));
-        }
-
-        Debug.Log("Inventory: ");
-        foreach ( var item in m_Inventory.Items )
-        {
-            if (item.GetType() == typeof(Weapon))
-            {
-                Weapon wep = (Weapon)item;
-                Debug.Log(" Weapon:");
-                Debug.Log("     name: " + wep.name);
-                Debug.Log("     damage: " + wep.damage);
-                Debug.Log("     speed: " + wep.speed);
-                Debug.Log("     id: " + wep.id);
-            }
+            inventory.AddItem(wep);
         }
     }
 
