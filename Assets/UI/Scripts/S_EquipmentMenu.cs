@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static S_Game_State;
 
 public class S_EquipmentMenu : MonoBehaviour
 {
@@ -13,7 +14,13 @@ public class S_EquipmentMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameState.Instance.SceneController.OnSceneLoading += OnSceneLoading; 
+    }
+
+    private void OnSceneLoading(AsyncOperation loadOper)
+    {
+        float progressValue = Mathf.Clamp01(loadOper.progress / 0.9f);
+        Debug.Log("Progress Value: " + (Mathf.Round(progressValue * 100) + "%"));
     }
 
     // Update is called once per frame
@@ -27,9 +34,15 @@ public class S_EquipmentMenu : MonoBehaviour
             {
                 InCountdown = false;
                 timeLeft = TIMER_LENGTH;
-                LoadScene();
+                GameState.Instance.UpdateState(State.Battle);
             }
         }
+        //if (loadingOperation != null)
+        //{
+        //    float progressValue = Mathf.Clamp01(loadingOperation.progress / 0.9f);
+        //    Debug.Log("Progress Value: " + (Mathf.Round(progressValue * 100) + "%"));
+        //    //percentLoaded.text = Mathf.Round(progressValue * 100) + "%";
+        //}
     }
 
     public void HandleReadyClick()
@@ -43,10 +56,5 @@ public class S_EquipmentMenu : MonoBehaviour
     {
         InCountdown = false;
         timeLeft = TIMER_LENGTH;
-    }
-
-    private void LoadScene()
-    {
-        SceneManager.LoadScene("TestScene");
     }
 }

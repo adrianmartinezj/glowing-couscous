@@ -8,8 +8,10 @@ using static DatabaseSystem;
 public class ControllableCharacter : BaseCharacter
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         const string path = "items";
         EntityDatabase ed = EntityDatabase.Load(path);
         foreach (Weapon wep in ed.weapons)
